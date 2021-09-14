@@ -20,10 +20,10 @@ python extract_nd2.py path/to/input_image.nd2 -r
 
 - Extract the target image slices.
 ```bash
-python extract_nd2.py path/to/input_image.nd2   -o output/dir/ 
-                                                -c 0 1 
-                                                -v 0 1 2 3 4
-                                                --maxIP
+python extract_nd2.py path/to/input_image.nd2   -o output/dir   \ 
+                                                -c 0 1          \ 
+                                                -v 0 1 2 3 4    \
+                                                --maxIP         \
 ```
 
 If you're not entirely certain how to use the different flags, consult the help entry:

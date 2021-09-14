@@ -24,6 +24,7 @@ ap.add_argument('-z', '--z_numbers', default=-1, type=int, nargs='+', help="inde
 
 # Booleans
 ap.add_argument('-m','--maxIP', default=False, action="store_true", help="Boolean to indicate whether to take a maxIP of the z-stacks, default is False")
+ap.add_argument('-r','--read', default=False, action="store_true", help="If true, the image will only be read and its dimensions will be printed out.")
 
 # parse args
 args = ap.parse_args()
@@ -49,6 +50,9 @@ print(f"maxip = {args.maxIP}")
 
 
 with ND2Reader(args.nd2_path) as images:
+    if args.read:
+        print(images.sizes)
+        sys.exit()
     if args.z_numbers == -1:
         args.z_numbers = range(0,int(images.sizes['z']))
     if args.v_numbers == -1:
@@ -65,8 +69,8 @@ with ND2Reader(args.nd2_path) as images:
         # then for every channel, look at every tile
         for v_num in args.v_numbers:
             # Make a directory for this particular c-v combinations
-            ic(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num}/",f"tile_{v_num}/"))
-            os.makedirs(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num}/",f"tile_{v_num}/"))
+            # ic(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/"))
+            os.makedirs(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/"),exist_ok=True)
 
             # then for each tile, either take maxip:
             if args.maxIP:
@@ -79,5 +83,5 @@ with ND2Reader(args.nd2_path) as images:
             else:
                 for z_num in args.z_numbers:
                     temp_image = images.get_frame_2D(c=c_num, v=v_num, z=z_num)
-                    ic(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num}/",f"tile_{v_num}/",f"{nd2_filename_base}_extracted_c{c_num+1}__tile{v_num+1}_z{z_num+1}.tif"))
-                    io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num}/",f"tile_{v_num}/",f"{nd2_filename_base}_extracted_c{c_num+1}__tile{v_num+1}_z{z_num+1}.tif"), temp_image)
+                    # ic(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}_tile{v_num+1}_z{z_num+1}.tif"))
+                    io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}__tile{v_num+1}_z{z_num+1}.tif"), temp_image)

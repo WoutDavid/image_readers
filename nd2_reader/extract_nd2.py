@@ -77,11 +77,11 @@ with ND2Reader(args.nd2_path) as images:
                 # Take all z-stacks into a list of images
                 temp_image_stack = [images.get_frame_2D(c=c_num, v=v_num, z=j) for j in args.z_numbers]
                 temp_image = np.maximum.reduce(temp_image_stack)
-                io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num}/",f"tile_{v_num}/",f"{nd2_filename_base}_extracted_c{c_num+1}_tile{v_num+1}_maxIP.tif"), temp_image)
+                io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}_tile{v_num+1}_maxIP.tif"), temp_image)
 
             # If no maxIP, then save all z-stacks seperately in yet another loop
             else:
                 for z_num in args.z_numbers:
                     temp_image = images.get_frame_2D(c=c_num, v=v_num, z=z_num)
                     # ic(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}_tile{v_num+1}_z{z_num+1}.tif"))
-                    io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}__tile{v_num+1}_z{z_num+1}.tif"), temp_image)
+                    io.imsave(os.path.join(args.out_dir, nd2_filename_base, f"channel_{c_num+1}/",f"tile_{v_num+1}/",f"{nd2_filename_base}_extracted_c{c_num+1}_tile{v_num+1}_z{z_num+1}.tif"), temp_image)
